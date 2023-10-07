@@ -90,5 +90,5 @@ http.createServer((req, res) => {
         res.end(JSON.stringify({ error: "Not Found" }));
     }
 }).listen(10000, () => {
-    console.log('Backend server is running on http://localhost:8081/');
+    console.log('Backend server is running on http://localhost:10000/');
 });
