@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Definitions</title>
+</head>
+<body>
+    <h2>Search Definition</h2>
+    <form id="searchForm">
+        <label>Word:</label>
+        <input type="text" id="searchWord" required>
+        <br>
+        <button type="button" onclick="searchDefinition()">Search</button>
+    </form>
+    <p id="feedback"></p>
+
+    <script>
+        function searchDefinition() {
+            const word = document.getElementById('searchWord').value;
+
+            if (!word.trim() || !/^[a-zA-Z\s]+$/.test(word)) { // if word is empty or contains non-alphabetic characters
+                alert("Invalid word. Please enter a valid word.");
+                return;
+            }
+
+            fetch(`http://localhost:8081/api/definitions/?word=${word}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    document.getElementById('feedback').innerText = data.error;
+                } else if (data.word && data.definition) {
+                    document.getElementById('feedback').innerText = `${data.word} : ${data.definition}`;
+                } else {
+                    document.getElementById('feedback').innerText = data.message || 'Unknown error occurred.';
+                }
+            })
+            .catch(error => {
+                document.getElementById('feedback').innerText = 'Error fetching definition. Please try again later.';
+            });
+        }
+    </script>
+</body>
+</html>

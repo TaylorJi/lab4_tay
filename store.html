@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Store Definitions</title>
+</head>
+<body>
+    <h2>Store Definition</h2>
+    <form id="storeForm">
+        <label>Word:</label>
+        <input type="text" id="word" required>
+        <br>
+        <label>Definition:</label>
+        <textarea id="definition" required></textarea>
+        <br>
+        <button type="button" onclick="storeDefinition()">Submit</button>
+    </form>
+    <p id="feedback"></p>
+
+    <script>
+        function storeDefinition() {
+            const word = document.getElementById('word').value;
+            const definition = document.getElementById('definition').value;
+
+            if (!word.trim() || !definition.trim() || !/^[a-zA-Z\s]+$/.test(word)) {
+                alert("Invalid word or definition. Please enter valid input.");
+                return;
+            }
+
+            fetch('http://localhost:8081/api/definitions/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ word, definition })
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('feedback').innerText = data.message || data.error;
+            });
+        }
+    </script>
+</body>
+</html>
