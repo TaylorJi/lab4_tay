@@ -89,6 +89,6 @@ http.createServer((req, res) => {
         res.writeHead(404, headers);
         res.end(JSON.stringify({ error: "Not Found" }));
     }
-}).listen(8081, () => {
+}).listen(10000, () => {
     console.log('Backend server is running on http://localhost:8081/');
 });
