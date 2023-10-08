@@ -27,7 +27,7 @@ http.createServer((req, res) => {
         return // return to prevent the rest of the code from running
     }
 
-    if (q.pathname === '/store') {
+    if (q.pathname === '/') {
         fs.readFile(path.join(__dirname, 'store.html'), (err, data) => {
             if (err) {
                 res.writeHead(404, headers);
@@ -51,14 +51,14 @@ http.createServer((req, res) => {
             if (!word || !definition || !/^[a-zA-Z\s]+$/.test(word)) { // check if word and definition are valid, and if word contains only letters and spaces
                 res.writeHead(400, headers);
                 res.end(JSON.stringify({ error: "Invalid word or definition provided." }));
-                return;
+                return;  // callback exits the function
             }
             // check if word already exists in the dictionary
             const existing = dictionary.find(item => item.word.toLowerCase() === word.toLowerCase());
             if (existing) {
                 res.writeHead(400, headers);
                 res.end(JSON.stringify({ error: `The word '${word}' already exists in the dictionary.` }));
-                return;
+                return; // callback exits the function
             }
             // if word is valid and doesn't exist, add it to the dictionary
             dictionary.push({ word, definition });
@@ -73,7 +73,7 @@ http.createServer((req, res) => {
         if (!word || !/^[a-zA-Z\s]+$/.test(word)) { // check if word is valid
             res.writeHead(400, headers);
             res.end(JSON.stringify({ error: "Invalid word provided." }));
-            return;
+            return;  // callback exits the function
         }
         const entry = dictionary.find(item => item.word.toLowerCase() === word.toLowerCase()); // case insensitive, make them all lowercase
         counter++;
@@ -81,7 +81,7 @@ http.createServer((req, res) => {
         if (!entry) {
             res.writeHead(404, headers);
             res.end(JSON.stringify({ message: `Request#${counter}, word '${word}' not found!` }));
-            return;
+            return;  // callback exits the function
         }
         res.writeHead(200, headers);
         res.end(JSON.stringify({ word: entry.word, definition: entry.definition }));

@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Store Definitions</title>
 </head>
+
 <body>
     <h2>Store Definition</h2>
     <form id="storeForm">
@@ -18,6 +20,7 @@
 
     <script>
         function storeDefinition() {
+            const xhttp = new XMLHttpRequest();
             const word = document.getElementById('word').value;
             const definition = document.getElementById('definition').value;
 
@@ -25,19 +28,40 @@
                 alert("Invalid word or definition. Please enter valid input.");
                 return;
             }
-
-            fetch('https://lab4-tayj.onrender.com/api/definitions/', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ word, definition })
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById('feedback').innerText = data.message || data.error;
+            xhttp.open("POST", "https://lab4-tayj.onrender.com/api/definitions/", true);
+            // xhttp.open("POST", "https://lab4-tayj.onrender.com/api/definitions/", true);
+            xhttp.setRequestHeader("Content-type", "application/json");
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && (this.status == 200) || (this.status == 400)) {
+                    const data = JSON.parse(this.responseText);
+                    document.getElementById('feedback').innerText = data.message || data.error;
+                }
+            };
+            const payload = JSON.stringify({
+                word,
+                definition
             });
+            xhttp.send(payload);
+
+
+
+
+            // fetch('https://lab4-tayj.onrender.com/api/definitions/', {
+            //         method: 'POST',
+            //         headers: {
+            //             'Content-Type': 'application/json'
+            //         },
+            //         body: JSON.stringify({
+            //             word,
+            //             definition
+            //         })
+            //     })
+            //     .then(response => response.json())
+            //     .then(data => {
+            //         document.getElementById('feedback').innerText = data.message || data.error;
+            //     });
         }
     </script>
 </body>
+
 </html>
