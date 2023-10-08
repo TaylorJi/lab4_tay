@@ -84,7 +84,9 @@ http.createServer((req, res) => {
             return;  // callback exits the function
         }
         res.writeHead(200, headers);
-        res.end(JSON.stringify({ word: entry.word, definition: entry.definition }));
+        res.end(JSON.stringify({ 
+            message: `Request #${counter}\nWord found:\n${entry.word} : ${entry.definition}`
+         }));
     } else {
         res.writeHead(404, headers);
         res.end(JSON.stringify({ error: "Not Found" }));
