@@ -80,7 +80,7 @@ http.createServer((req, res) => {
         // if word is not found, return 404, otherwise return the word and definition
         if (!entry) {
             res.writeHead(404, headers);
-            res.end(JSON.stringify({ message: `Request#${counter}, word '${word}' not found!` }));
+            res.end(JSON.stringify({ message: `Request #${counter}, word '${word}' not found!` }));
             return;  // callback exits the function
         }
         res.writeHead(200, headers);

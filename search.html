@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Search Definitions</title>
 </head>
+
 <body>
     <h2>Search Definition</h2>
     <form id="searchForm">
@@ -35,8 +37,11 @@
                     } else {
                         document.getElementById('feedback').innerText = data.message || 'Unknown error occurred.';
                     }
-                } else if (this.readyState == 4) {
-                    document.getElementById('feedback').innerText = "The word is not in the dictionary."
+                } else if (this.readyState == 4 && (this.status == 404)) {
+                    const data = JSON.parse(this.responseText);
+                    document.getElementById('feedback').innerText = data.message; // The word is not in the dictionary message with request number
+                } else if (this.readyState == 4){
+                    document.getElementById('feedback').innerText = "Error fetching definition.";
                 }
             };
             xhttp.send();
@@ -65,4 +70,5 @@
         }
     </script>
 </body>
+
 </html>
