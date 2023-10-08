@@ -1,3 +1,6 @@
+/**
+ * ChatGpt-4.0 was used to set up index and search page (path setting)
+ */
 const http = require('http');
 const url = require('url');
 const fs = require('fs');

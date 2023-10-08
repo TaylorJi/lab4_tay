@@ -29,7 +29,6 @@
                 return;
             }
             xhttp.open("POST", "https://lab4-tayj.onrender.com/api/definitions/", true);
-            // xhttp.open("POST", "https://lab4-tayj.onrender.com/api/definitions/", true);
             xhttp.setRequestHeader("Content-type", "application/json");
             xhttp.onreadystatechange = function () {
                 if (this.readyState == 4 && (this.status == 200) || (this.status == 400)) {
@@ -42,26 +41,13 @@
                 definition
             });
             xhttp.send(payload);
-
-
-
-
-            // fetch('https://lab4-tayj.onrender.com/api/definitions/', {
-            //         method: 'POST',
-            //         headers: {
-            //             'Content-Type': 'application/json'
-            //         },
-            //         body: JSON.stringify({
-            //             word,
-            //             definition
-            //         })
-            //     })
-            //     .then(response => response.json())
-            //     .then(data => {
-            //         document.getElementById('feedback').innerText = data.message || data.error;
-            //     });
         }
     </script>
 </body>
 
 </html>
+
+<!-- 
+
+    ChatGpt-4.0 was used to create a form that allows users to store a word and its definition.
+ -->
